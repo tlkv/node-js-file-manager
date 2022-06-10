@@ -16,25 +16,19 @@ const start = () => {
   const rl = readline.createInterface({ input, output });
   userWelcome();
   rl.on('line', async line => {
-    switch (line) {
-      case '.exit':
-        rl.close();
-        break;
-      case 'up':
-        up();
-        printDirectory();
-        break;
-      case 'ls':
-        await ls();
-        printDirectory();
-        break;
-      case 'cd':
-        cd();
-        printDirectory();
-        break;
-      default:
-        output.write('Line entered' + EOL);
-        break;
+    if (line === '.exit') {
+      rl.close();
+    } else if (line === 'up') {
+      up();
+      printDirectory();
+    } else if (line === 'ls') {
+      await ls();
+      printDirectory();
+    } else if (line.startsWith('cd ')) {
+      await cd(line);
+      printDirectory();
+    } else {
+      output.write('Line entered' + EOL);
     }
   });
 
