@@ -9,11 +9,11 @@ export const cd = async inputStr => {
     if (argPath.length === 0) {
       throw new Error('Invalid input');
     }
-    const tempPath = path.resolve(process.env.USER_DIRECTORY, argPath);
+    const tempPath = path.resolve(process.env.WORK_DIRECTORY, argPath);
     const fixedPath = path.normalize(tempPath);
     const dirExists = await checkExists(fixedPath);
     if (dirExists) {
-      process.env.USER_DIRECTORY = fixedPath;
+      process.env.WORK_DIRECTORY = fixedPath;
     } else {
       throw new Error('Directory does not exist!');
     }
