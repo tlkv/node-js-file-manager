@@ -1,7 +1,7 @@
 import * as path from 'path';
 import * as fs from 'fs/promises';
 import * as readline from 'readline';
-import { EOL, userInfo } from 'os';
+import { EOL, userInfo, arch, cpus } from 'os';
 import { stdin as input, stdout as output } from 'process';
 import { homedir } from 'os';
 import { userWelcome } from './_utils/userWelcome.js';
@@ -32,10 +32,19 @@ const start = () => {
       printMessage(homedir);
       printDirectory();
     } else if (line === 'os --EOL') {
-      EOL === '\r\n' ? printMessage('Your system EOL is: \\r\\n') : printMessage('Your system EOL is: \\n');
+      printMessage(`Your system EOL is: ${JSON.stringify(EOL)}`);
+
       printDirectory();
     } else if (line === 'os --username') {
       printMessage(userInfo().username);
+      printDirectory();
+    } else if (line === 'os --architecture') {
+      printMessage(arch());
+      printDirectory();
+    } else if (line === 'os --cpus') {
+      const procData = cpus();
+      printMessage(`Number of logical(!) cores: ${procData.length}`);
+      console.table(procData.map(i => ({ model: i.model, speed: Math.round(i.speed / 1000) + 'GHz' })));
       printDirectory();
     } else {
       output.write('Invalid input' + EOL);
