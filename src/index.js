@@ -12,6 +12,7 @@ import { hash } from './modules/hash/hash.js';
 import { cat } from './modules/fs/cat.js';
 import { add } from './modules/fs/add.js';
 import { cp } from './modules/fs/cp.js';
+import { rm } from './modules/fs/rm.js';
 import { cd } from './modules/navigation/cd.js';
 import { osFunc } from './modules/os/os.js';
 import { decompress } from './modules/compress/decompress.js';
@@ -47,6 +48,8 @@ const start = () => {
       await add(line);
     } else if (line.startsWith('cp ')) {
       await cp(line);
+    } else if (line.startsWith('rm ')) {
+      await rm(line);
     } else if (
       line === 'cd' ||
       line === 'os' ||
@@ -55,7 +58,8 @@ const start = () => {
       line === 'compress' ||
       line === 'decompress' ||
       line === 'add' ||
-      line === 'cp'
+      line === 'cp' ||
+      line === 'rm'
     ) {
       console.error(new Error('Operation failed - no args specified'));
     } else {
