@@ -10,6 +10,7 @@ import { up } from './modules/navigation/up.js';
 import { printDirectory } from './_utils/printDirectory.js';
 import { printMessage } from './_utils/printMessage.js';
 import { ls } from './modules/navigation/ls.js';
+import { hash } from './modules/hash/hash.js';
 import { cd } from './modules/navigation/cd.js';
 
 const start = () => {
@@ -33,7 +34,6 @@ const start = () => {
       printDirectory();
     } else if (line === 'os --EOL') {
       printMessage(`Your system EOL is: ${JSON.stringify(EOL)}`);
-
       printDirectory();
     } else if (line === 'os --username') {
       printMessage(userInfo().username);
@@ -45,6 +45,12 @@ const start = () => {
       const procData = cpus();
       printMessage(`Number of logical(!) cores: ${procData.length}`);
       console.table(procData.map(i => ({ model: i.model, speed: Math.round(i.speed / 1000) + 'GHz' })));
+      printDirectory();
+    } else if (line.startsWith('hash ')) {
+      const fHash = await hash(line);
+      if (fHash) {
+        printMessage(`File's hash is: ${fHash}`);
+      }
       printDirectory();
     } else {
       output.write('Invalid input' + EOL);
