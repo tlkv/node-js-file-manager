@@ -9,6 +9,7 @@ export const hash = async inputStr => {
     if (argPath.length === 0) {
       throw new Error('Invalid input');
     }
+
     const tempPath = path.join(process.env.WORK_DIRECTORY, argPath);
     const fixedPath = path.normalize(tempPath);
 

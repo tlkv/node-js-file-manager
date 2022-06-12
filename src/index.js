@@ -11,6 +11,7 @@ import { printDirectory } from './_utils/printDirectory.js';
 import { printMessage } from './_utils/printMessage.js';
 import { ls } from './modules/navigation/ls.js';
 import { hash } from './modules/hash/hash.js';
+import { cat } from './modules/fs/cat.js';
 import { cd } from './modules/navigation/cd.js';
 
 const start = () => {
@@ -22,38 +23,50 @@ const start = () => {
       rl.close();
     } else if (line === 'up') {
       up();
-      printDirectory();
+      // printDirectory();
     } else if (line === 'ls') {
       await ls();
-      printDirectory();
+      // printDirectory();
     } else if (line.startsWith('cd ')) {
       await cd(line);
-      printDirectory();
+      // printDirectory();
     } else if (line === 'os --homedir') {
       printMessage(homedir);
-      printDirectory();
+      // printDirectory();
     } else if (line === 'os --EOL') {
       printMessage(`Your system EOL is: ${JSON.stringify(EOL)}`);
-      printDirectory();
+      // printDirectory();
     } else if (line === 'os --username') {
       printMessage(userInfo().username);
-      printDirectory();
+      // printDirectory();
     } else if (line === 'os --architecture') {
       printMessage(arch());
-      printDirectory();
+      // printDirectory();
     } else if (line === 'os --cpus') {
       const procData = cpus();
       printMessage(`Number of logical(!) cores: ${procData.length}`);
       console.table(procData.map(i => ({ model: i.model, speed: Math.round(i.speed / 1000) + 'GHz' })));
-      printDirectory();
+      // printDirectory();
     } else if (line.startsWith('hash ')) {
       const fHash = await hash(line);
       if (fHash) {
         printMessage(`File's hash is: ${fHash}`);
       }
-      printDirectory();
+      // printDirectory();
+    } else if (line.startsWith('hash ')) {
+      const fHash = await hash(line);
+      if (fHash) {
+        printMessage(`File's hash is: ${fHash}`);
+      }
+      // printDirectory();
+    } else if (line.startsWith('cat ')) {
+      cat(line);
+      // printDirectory();
     } else {
       output.write('Invalid input' + EOL);
+    }
+    if (line !== '.exit') {
+      printDirectory();
     }
   });
 
