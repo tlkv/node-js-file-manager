@@ -3,7 +3,6 @@ import { createReadStream } from 'node:fs';
 import { printDirectory } from '../../_utils/printDirectory.js';
 import { printMessage } from '../../_utils/printMessage.js';
 import { checkExists } from '../../_utils/utils.js';
-import { EOL } from 'os';
 
 export const cat = async inputStr => {
   try {

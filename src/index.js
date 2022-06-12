@@ -10,6 +10,8 @@ import { up } from './modules/navigation/up.js';
 import { ls } from './modules/navigation/ls.js';
 import { hash } from './modules/hash/hash.js';
 import { cat } from './modules/fs/cat.js';
+import { add } from './modules/fs/add.js';
+import { cp } from './modules/fs/cp.js';
 import { cd } from './modules/navigation/cd.js';
 import { osFunc } from './modules/os/os.js';
 import { decompress } from './modules/compress/decompress.js';
@@ -41,13 +43,19 @@ const start = () => {
       await compress(line);
     } else if (line.startsWith('decompress ')) {
       await decompress(line);
+    } else if (line.startsWith('add ')) {
+      await add(line);
+    } else if (line.startsWith('cp ')) {
+      await cp(line);
     } else if (
       line === 'cd' ||
       line === 'os' ||
       line === 'hash' ||
       line === 'cat' ||
       line === 'compress' ||
-      line === 'decompress'
+      line === 'decompress' ||
+      line === 'add' ||
+      line === 'cp'
     ) {
       console.error(new Error('Operation failed - no args specified'));
     } else {
