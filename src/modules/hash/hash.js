@@ -7,7 +7,7 @@ export const hash = async inputStr => {
   try {
     const argPath = inputStr.toString().slice(5);
     if (argPath.length === 0) {
-      throw new Error('Invalid input');
+      throw new Error('Operation failed');
     }
 
     const tempPath = path.join(process.env.WORK_DIRECTORY, argPath);

@@ -1,16 +1,15 @@
 import * as path from 'path';
 import { createReadStream } from 'node:fs';
+import { printDirectory } from '../../_utils/printDirectory.js';
 import { printMessage } from '../../_utils/printMessage.js';
 import { checkExists } from '../../_utils/utils.js';
 import { EOL } from 'os';
-import { pipeline } from 'node:stream/promises';
-import { createHash } from 'node:crypto';
 
 export const cat = async inputStr => {
   try {
     const argPath = inputStr.toString().slice(4);
     if (argPath.length === 0) {
-      throw new Error('Invalid input');
+      throw new Error('Operation failed');
     }
     const tempPath = path.join(process.env.WORK_DIRECTORY, argPath);
     const fixedPath = path.normalize(tempPath);
@@ -25,8 +24,11 @@ export const cat = async inputStr => {
     });
 
     readStream.on('data', chunk => printMessage(chunk));
-    readStream.on('end', () => printMessage(EOL));
+    readStream.on('end', () => {
+      printDirectory();
+    });
     readStream.on('error', () => {
+      printDirectory();
       throw new Error('Operation failed');
     });
   } catch (err) {
