@@ -12,6 +12,8 @@ import { hash } from './modules/hash/hash.js';
 import { cat } from './modules/fs/cat.js';
 import { cd } from './modules/navigation/cd.js';
 import { osFunc } from './modules/os/os.js';
+import { decompress } from './modules/compress/decompress.js';
+import { compress } from './modules/compress/compress.js';
 
 const start = () => {
   process.env.WORK_DIRECTORY = homedir;
@@ -35,7 +37,18 @@ const start = () => {
       }
     } else if (line.startsWith('cat ')) {
       await cat(line);
-    } else if (line === 'cd' || line === 'os' || line === 'hash' || line === 'cat') {
+    } else if (line.startsWith('compress ')) {
+      await compress(line);
+    } else if (line.startsWith('decompress ')) {
+      await decompress(line);
+    } else if (
+      line === 'cd' ||
+      line === 'os' ||
+      line === 'hash' ||
+      line === 'cat' ||
+      line === 'compress' ||
+      line === 'decompress'
+    ) {
       console.error(new Error('Operation failed - no args specified'));
     } else {
       output.write('Invalid input' + EOL);
